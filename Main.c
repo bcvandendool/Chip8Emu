@@ -12,7 +12,7 @@ void main()
     setupInput();
 
     initialize();
-    loadGame("pong");
+    //loadGame("pong");
 
     for(;;)
     {

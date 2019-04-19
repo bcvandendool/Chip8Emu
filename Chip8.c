@@ -81,7 +81,22 @@ void initialize()
 void loadGame(char game[])
 {
 
-    // use fopen in binary mode
+    FILE *file;
+    file = fopen(game, "rb");
+
+    int buffer[4096 - 512];
+    for(int i = 0; i < 4096 - 512; i++)
+    {
+        buffer[i] = 0;
+    }
+
+    fread(buffer, sizeof(buffer), 1, file);
+
+    for(int i = 0; i< 4096 - 512; i++)
+    {
+        memory[i + 512] = buffer[i];
+    }
+
 
 }
 
@@ -93,7 +108,48 @@ void emulateCycle()
     switch(opcode & 0xF000)
     {
 
-        case 0xA000:
+        case 0x8000:
+
+            switch(opcode & 0x000F)
+            {
+
+                case 0x0000:
+
+                    // Opcode: 8XY0
+                    // Type: Assign
+                    // Pseudo: Vx = Vy
+                    V[(opcode >> 8) & 0xF] = V[(opcode >> 4) & 0xF];
+
+                break;
+
+                case 0x001:
+
+                    // Opcode: 8XY0
+                    // Type: BitOp
+                    // Pseudo: Vx = Vx|Vy
+                    V[(opcode >> 8)& 0xF] = V[(opcode >> 8)& 0xF] | V[(opcode >> 4)& 0xF];
+
+                break;
+
+                case 0x002:
+
+                    // Opcode: 8XY2
+                    // Type: BitOp
+                    // Pseudo: Vx = Vx&Vy
+                    V[(opcode >> 8)& 0xF] = V[(opcode >> 8)& 0xF] & V[(opcode >> 4)& 0xF];
+
+                break;
+
+                case 0x003:
+
+                    // Opcode: 8XY3
+                    // Type: BitOp
+                    // Pseudo: Vx = Vx^Vy
+                    V[(opcode >> 8)& 0xF] = V[(opcode >> 8)& 0xF] ^ V[(opcode >> 4)& 0xF];
+
+                break;
+
+            }
 
         break;
 
