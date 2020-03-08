@@ -21,6 +21,8 @@ unsigned short sp;
 
 unsigned char gfx[64 * 32];
 
+unsigned char key[16];
+
 unsigned char chip8_fontset[80] =
 {
     0xF0, 0x90, 0x90, 0x90, 0xF0, // 0

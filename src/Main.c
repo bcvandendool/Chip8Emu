@@ -11,8 +11,8 @@ int main(int argc, char **argv)
 {
 
     initChip8();
-    initInput();
     initGraphics();
+    initInput();
 
     if(argc != 2)
     {
@@ -40,6 +40,8 @@ int main(int argc, char **argv)
         }
 
         setInput();
+
+        handleSDLEvents();
 
         sleep(1);
 

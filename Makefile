@@ -4,7 +4,7 @@ CC       = gcc
 CFLAGS   = -std=c99 -Wall -Wextra -I.
 
 LINKER   = gcc
-LFLAGS   = -Wall -I. -lm
+LFLAGS   = -Wall -I. -lm -lSDL2
 
 DEPDIR := .deps
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.d
