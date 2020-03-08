@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 
 #include "include/Input.h"
 #include "include/Chip8.h"
@@ -33,12 +34,14 @@ int main(int argc, char **argv)
             drawGraphics();
         }
 
-        if(playSound)
+        if(sound_timer > 0)
         {
             playBeep();
         }
 
         setInput();
+
+        sleep(1);
 
     }
 

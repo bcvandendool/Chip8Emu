@@ -1,6 +1,7 @@
 int systemIsRunning;
-int playSound;
 int drawFlag;
+
+unsigned char sound_timer;
 
 void initChip8();
 void loadROM(char* file);
