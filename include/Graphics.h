@@ -1,0 +1,2 @@
+void initGraphics();
+void drawGraphics();
