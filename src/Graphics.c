@@ -74,7 +74,7 @@ void drawGraphics()
     {
         for(int x = 0; x < 64; x++)
         {
-            if(gfx[y+x] == 1)
+            if(gfx[y*64+x] == 1)
             {
                 SDL_SetRenderDrawColor(ren, 0xFF, 0xFF, 0xFF, 0xFF);
             } else

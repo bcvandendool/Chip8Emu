@@ -32,6 +32,7 @@ int main(int argc, char **argv)
         if(drawFlag)
         {
             drawGraphics();
+            drawFlag = 0;
         }
 
         if(sound_timer > 0)
@@ -39,11 +40,12 @@ int main(int argc, char **argv)
             playBeep();
         }
 
-        setInput();
-
         handleSDLEvents();
 
-        sleep(1);
+        setInput();
+
+        sleep(1/600);
+
 
     }
 

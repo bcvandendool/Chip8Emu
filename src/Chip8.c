@@ -23,6 +23,8 @@ unsigned char gfx[64 * 32];
 
 unsigned char key[16];
 
+int count = 0;
+
 unsigned char chip8_fontset[80] =
 {
     0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -140,6 +142,14 @@ void executeOP()
     printf("0x%X: 0x%X\n", pc, opcode);
 
     pc += 2;
+
+    count++;
+
+    if(count > 10)
+    {
+        count = 0;
+        delay_timer--;
+    }
 
     switch(opcode & 0xF000)
     {
@@ -356,6 +366,34 @@ void executeOP()
         //(Vx, Vy). Sprites are XORed onto the existing screen. If this causes any pixels to be erased, VF is set to 1, otherwise it is set to 0. If the sprite
         //is positioned so part of it is outside the coordinates of the display, it wraps around to the opposite side of the screen. See instruction 8xy3 for
         //more information on XOR.
+        {
+            int x = V[(opcode & 0x0F00) >> 8];
+            int y = V[(opcode & 0x00F0) >> 4];
+            int n = opcode & 0x000F;
+
+            V[0xF] = 0;
+
+            for(int yline = 0; yline < n; yline++)
+            {
+
+                for(int xline = 0; xline < 8; xline++)
+                {
+
+                    if((memory[I + yline] & (0x80 >> xline)) != 0)
+                    {
+                        if(gfx[(x + xline + ((y + yline) * 64))] == 1)
+                        {
+                            V[0xF] = 1;
+                        }
+                        gfx[x + xline + ((y + yline) * 64)] ^= 1;
+                    }
+
+                }
+
+            }
+
+            drawFlag = 1;
+        }
         break;
 
         case 0xE000:
@@ -366,12 +404,20 @@ void executeOP()
                 //Opcode: Ex9E - SKP Vx
                 //Skip next instruction if key with the value of Vx is pressed.
                 //Checks the keyboard, and if the key corresponding to the value of Vx is currently in the down position, PC is increased by 2.
+                    if(key[(opcode & 0x0F00) >> 8] == 1)
+                    {
+                        pc += 2;
+                    }
                 break;
 
                 case 0x00A1:
                 //Opcode: ExA1 - SKNP Vx
                 //Skip the next instruction if key with the value of Vx is not pressed.
                 //Checks the keyboard, and if the key corresponding to the value of Vx is currently in the up position, PC is increased by 2.
+                    if(key[(opcode & 0x0F00) >> 8] == 0)
+                    {
+                        pc += 2;
+                    }
                 break;
 
             }
@@ -392,6 +438,7 @@ void executeOP()
                 //Opcode: Fx0A - LD Vx, k
                 //Wait for a key press, store the value of the key in Vx.
                 //All execution stops until a key is pressed, then the value of that key is stored in Vx.
+                    //TODO: Implement Fx0A
                 break;
 
                 case 0x0015:
