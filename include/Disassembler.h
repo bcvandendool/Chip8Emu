@@ -1,0 +1,1 @@
+void disassembleInstruction(unsigned short bytecode, char* instruction, int length);
