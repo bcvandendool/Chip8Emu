@@ -3,10 +3,10 @@
 void disassembleInstruction(unsigned short bytecode, char* instruction, int length)
 {
 
-    char nnn[3] = "";
+    char nnn[4] = "";
     snprintf(nnn, sizeof nnn, "%X", bytecode & 0x0FFF);
 
-    char kk[2] = "";
+    char kk[3] = "";
     snprintf(kk, sizeof kk, "%X", bytecode & 0x00FF);
 
     char n = (bytecode & 0x000F);

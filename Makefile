@@ -1,7 +1,7 @@
 TARGET   = emulator
 
 CC       = gcc
-CFLAGS   = -std=c99 -Wall -Wextra -I.
+CFLAGS   = -std=c99 -Wall -Wextra -O2 -pipe -I.
 
 LINKER   = gcc
 LFLAGS   = -Wall -I. -lm -lSDL2

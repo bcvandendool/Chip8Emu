@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "include/Disassembler.h"
+#include "include/Input.h"
 
 int systemIsRunning;
 int drawFlag;
@@ -449,9 +450,7 @@ void executeOP()
                 //Opcode: Fx0A - LD Vx, k
                 //Wait for a key press, store the value of the key in Vx.
                 //All execution stops until a key is pressed, then the value of that key is stored in Vx.
-                    //TODO: Implement Fx0A
-                    printf("Recieved Fx0A\n");
-                    systemIsRunning = 0;
+                    V[(opcode & 0x0F00) >> 8] = waitTillKeyPress();
                 break;
 
                 case 0x0015:
