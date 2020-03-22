@@ -54,6 +54,20 @@ void handleSDLEvents()
             SDL_DestroyWindow(win);
             SDL_Quit();
             systemIsRunning = 0;
+        } else if(e.type == SDL_KEYDOWN)
+        {
+
+            if(e.key.keysym.sym == SDLK_RIGHT)
+            {
+                systemStep = 1;
+            } else if(e.key.keysym.sym == SDLK_DOWN)
+            {
+                systemIsPaused = 1;
+            } else if(e.key.keysym.sym == SDLK_UP)
+            {
+                systemIsPaused = 0;
+            }
+
         }
     }
 

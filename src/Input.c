@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <time.h>
 
 #include <SDL2/SDL.h>
 
@@ -18,6 +19,7 @@ void initInput()
 void setInput()
 {
 
+    SDL_PumpEvents();
     currentKeyStates = SDL_GetKeyboardState(NULL);
 
     /**
@@ -53,10 +55,11 @@ void setInput()
     
 }
 
-char waitTillKeyPress()
+unsigned char waitTillKeyPress()
 {
 
     SDL_Event e;
+    struct timespec ts = {0, 5000000L};
 
     while(1)
     {
@@ -141,7 +144,7 @@ char waitTillKeyPress()
 
         }
 
-        sleep(0.005);
+        nanosleep(&ts, NULL);
 
     }
 

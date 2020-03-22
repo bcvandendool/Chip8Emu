@@ -1,10 +1,10 @@
 TARGET   = emulator
 
 CC       = gcc
-CFLAGS   = -std=c99 -Wall -Wextra -O2 -pipe -I.
+CFLAGS   = -Wall -Wextra -g -O2 -pipe -I.
 
 LINKER   = gcc
-LFLAGS   = -Wall -I. -lm -lSDL2
+LFLAGS   = -Wall -Wextra -I. -lm -lSDL2
 
 DEPDIR := .deps
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.d

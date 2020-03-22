@@ -6,6 +6,8 @@
 #include "include/Input.h"
 
 int systemIsRunning;
+int systemIsPaused;
+int systemStep;
 int drawFlag;
 
 unsigned char delay_timer;
@@ -25,8 +27,6 @@ unsigned short sp;
 unsigned char gfx[64 * 32];
 
 unsigned char key[16];
-
-int count;
 
 unsigned char chip8_fontset[80] =
 {
@@ -56,8 +56,6 @@ void initChip8()
     I = 0;
     sp = 0;
 
-    count = 0;
-
     memset(gfx, 0, sizeof gfx);
     memset(stack, 0, sizeof stack);
     memset(V, 0, sizeof V);
@@ -68,6 +66,8 @@ void initChip8()
 
     drawFlag = 1;
     systemIsRunning = 1;
+    systemIsPaused = 0;
+    systemStep = 0;
 
     for(int i = 0; i < 80; i++)
     {
@@ -154,14 +154,6 @@ void executeOP()
     printf("0x%04X: 0x%04X  %s\n", pc, opcode, instruction);
 
     pc += 2;
-
-    if(count == 10)
-    {
-        count = 0;
-        delay_timer--;
-    }
-
-    count++;
 
     switch(opcode & 0xF000)
     {
